@@ -162,6 +162,7 @@ class RegistrationControllerTest {
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedErrorMessage = "country: must not be blank";
         String expectedSizeErrorMessage = "country: size must be between 2 and 2";
+        String expectedCountryCodeErrorMessage = "country: Invalid country code (%s)";
 
         request.setCountry("");
         this.mockMvc.perform(post("/registration")
@@ -170,8 +171,9 @@ class RegistrationControllerTest {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$").exists())
             .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
-            .andExpect(jsonPath("$.errors.length()").value(2))
-            .andExpect(jsonPath("$.errors").value(containsInAnyOrder(expectedErrorMessage, expectedSizeErrorMessage)));
+            .andExpect(jsonPath("$.errors.length()").value(3))
+            .andExpect(jsonPath("$.errors").value(
+                containsInAnyOrder(expectedErrorMessage, expectedSizeErrorMessage, String.format(expectedCountryCodeErrorMessage, request.getCountry()))));
 
         request.setCountry(null);
         this.mockMvc.perform(post("/registration")
@@ -180,8 +182,9 @@ class RegistrationControllerTest {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$").exists())
             .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
-            .andExpect(jsonPath("$.errors.length()").value(1))
-            .andExpect(jsonPath("$.errors").value(containsInAnyOrder(expectedErrorMessage)));
+            .andExpect(jsonPath("$.errors.length()").value(2))
+            .andExpect(
+                jsonPath("$.errors").value(containsInAnyOrder(expectedErrorMessage, String.format(expectedCountryCodeErrorMessage, request.getCountry()))));
 
         request.setCountry("  ");
         this.mockMvc.perform(post("/registration")
@@ -190,8 +193,9 @@ class RegistrationControllerTest {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$").exists())
             .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
-            .andExpect(jsonPath("$.errors.length()").value(1))
-            .andExpect(jsonPath("$.errors").value(containsInAnyOrder(expectedErrorMessage)));
+            .andExpect(jsonPath("$.errors.length()").value(2))
+            .andExpect(
+                jsonPath("$.errors").value(containsInAnyOrder(expectedErrorMessage, String.format(expectedCountryCodeErrorMessage, request.getCountry()))));
     }
 
     @Test
@@ -273,6 +277,7 @@ class RegistrationControllerTest {
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedFormatErrorMessage = "country: size must be between 2 and 2";
+        String expectedCountryCodeErrorMessage = "country: Invalid country code (%s)";
 
         request.setCountry("BUL");
         this.mockMvc.perform(post("/registration")
@@ -281,8 +286,9 @@ class RegistrationControllerTest {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$").exists())
             .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
-            .andExpect(jsonPath("$.errors.length()").value(1))
-            .andExpect(jsonPath("$.errors").value(containsInAnyOrder(expectedFormatErrorMessage)));
+            .andExpect(jsonPath("$.errors.length()").value(2))
+            .andExpect(jsonPath("$.errors")
+                .value(containsInAnyOrder(expectedFormatErrorMessage, String.format(expectedCountryCodeErrorMessage, request.getCountry()))));
 
         request.setCountry("B");
         this.mockMvc.perform(post("/registration")
@@ -291,8 +297,9 @@ class RegistrationControllerTest {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$").exists())
             .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
-            .andExpect(jsonPath("$.errors.length()").value(1))
-            .andExpect(jsonPath("$.errors").value(containsInAnyOrder(expectedFormatErrorMessage)));
+            .andExpect(jsonPath("$.errors.length()").value(2))
+            .andExpect(jsonPath("$.errors")
+                .value(containsInAnyOrder(expectedFormatErrorMessage, String.format(expectedCountryCodeErrorMessage, request.getCountry()))));
 
         request.setCountry("ES");
         this.mockMvc.perform(post("/registration")

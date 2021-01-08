@@ -1,4 +1,4 @@
-package com.isilona.registry.application;
+package com.isilona.registry.application.validation;
 
 public final class ValidationConstants {
 
