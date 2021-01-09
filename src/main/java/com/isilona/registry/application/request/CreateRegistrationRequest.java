@@ -4,6 +4,7 @@ import static com.isilona.registry.application.validation.ValidationConstants.EM
 
 import com.isilona.registry.application.validation.allowedcountry.AllowedCountryConstraint;
 import com.isilona.registry.application.validation.countryocde.CountryCodeConstraint;
+import com.isilona.registry.application.validation.phone.PhoneNumberConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,6 +17,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
+@PhoneNumberConstraint
 public class CreateRegistrationRequest {
 
     @NotBlank
