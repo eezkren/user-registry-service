@@ -1,5 +1,7 @@
 package com.isilona.registry.application.validation.countryocde;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 import java.util.Arrays;
 import java.util.Locale;
 import javax.validation.ConstraintValidator;
@@ -14,7 +16,7 @@ public class CountryCodeValidator implements ConstraintValidator<CountryCodeCons
 
     @Override
     public boolean isValid(String countryCodeField, ConstraintValidatorContext cxt) {
-        if (countryCodeField == null || countryCodeField.trim().length() == 0) {
+        if (isBlank(countryCodeField)) {
             return true;
         }
 

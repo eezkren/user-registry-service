@@ -1,5 +1,7 @@
 package com.isilona.registry.application.validation.allowedcountry;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -20,7 +22,7 @@ public class AllowedCountryValidator implements ConstraintValidator<AllowedCount
 
     @Override
     public boolean isValid(String countryCodeField, ConstraintValidatorContext cxt) {
-        if (countryCodeField == null || countryCodeField.trim().length() == 0) {
+        if (isBlank(countryCodeField)) {
             return true;
         }
 
