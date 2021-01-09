@@ -161,7 +161,7 @@ class RegistrationControllerTest {
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedErrorMessage = "country: must not be blank";
-        String expectedSizeErrorMessage = "country: size must be between 2 and 2";
+        String expectedSizeErrorMessage = "country: {com.isilona.registry.validation.CountryCode.size.message}";
 
         request.setCountry("");
         this.mockMvc.perform(post("/registration")
@@ -273,9 +273,9 @@ class RegistrationControllerTest {
     void postWithInvalidCountryFormatShouldReturnError() throws Exception {
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
-        String expectedFormatErrorMessage = "country: size must be between 2 and 2";
-        String expectedCountryCodeErrorMessage = "country: Invalid country code (%s)";
-        String expectedCountryNorAllowedErrorMessage = "country: Unfortunately at this moment registration from %s is not possible";
+        String expectedFormatErrorMessage = "country: {com.isilona.registry.validation.CountryCode.size.message}";
+        String expectedCountryCodeErrorMessage = "country: {com.isilona.registry.validation.CountryCode.message}";
+        String expectedCountryNorAllowedErrorMessage = "country: {com.isilona.registry.validation.AllowedCountry.message}";
 
         request.setCountry("BUL");
         this.mockMvc.perform(post("/registration")
@@ -288,8 +288,8 @@ class RegistrationControllerTest {
             .andExpect(jsonPath("$.errors")
                 .value(containsInAnyOrder(
                     expectedFormatErrorMessage,
-                    String.format(expectedCountryCodeErrorMessage, request.getCountry()),
-                    String.format(expectedCountryNorAllowedErrorMessage, request.getCountry())
+                    expectedCountryCodeErrorMessage,
+                    expectedCountryNorAllowedErrorMessage
                 )));
 
         request.setCountry("B");

@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AllowedCountryConstraint {
 
-    String message() default "Unfortunately at this moment registration from {yourCountry} is not possible";
+    String message() default "{com.isilona.registry.validation.AllowedCountry.message}";
 
     Class<?>[] groups() default {};
 

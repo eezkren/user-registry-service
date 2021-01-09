@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CountryCodeConstraint {
 
-    String message() default "Invalid country code ({wrongValue})";
+    String message() default "{com.isilona.registry.validation.CountryCode.message}";
 
     Class<?>[] groups() default {};
 

@@ -33,7 +33,7 @@ public class CreateRegistrationRequest {
 
     @AllowedCountryConstraint
     @CountryCodeConstraint
-    @Size(min = 2, max = 2)
+    @Size(min = 2, max = 2, message = "{com.isilona.registry.validation.CountryCode.size.message}")
     @NotBlank
     private String country;
 
