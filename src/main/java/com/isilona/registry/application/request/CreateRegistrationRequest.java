@@ -2,6 +2,7 @@ package com.isilona.registry.application.request;
 
 import static com.isilona.registry.application.validation.ValidationConstants.EMAIL;
 
+import com.isilona.registry.application.validation.allowedcountry.AllowedCountryConstraint;
 import com.isilona.registry.application.validation.countryocde.CountryCodeConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -30,6 +31,7 @@ public class CreateRegistrationRequest {
     @NotBlank
     private String phone;
 
+    @AllowedCountryConstraint
     @CountryCodeConstraint
     @Size(min = 2, max = 2)
     @NotBlank
