@@ -14,7 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class CountryCodeValidatorTest {
 
-    CountryCodeValidator validator = new CountryCodeValidator();
+    private final CountryCodeValidator validator = new CountryCodeValidator();
 
     @Mock
     ConstraintValidatorContextImpl cxt;

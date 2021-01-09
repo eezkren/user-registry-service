@@ -162,7 +162,6 @@ class RegistrationControllerTest {
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedErrorMessage = "country: must not be blank";
         String expectedSizeErrorMessage = "country: size must be between 2 and 2";
-        String expectedCountryCodeErrorMessage = "country: Invalid country code (%s)";
 
         request.setCountry("");
         this.mockMvc.perform(post("/registration")

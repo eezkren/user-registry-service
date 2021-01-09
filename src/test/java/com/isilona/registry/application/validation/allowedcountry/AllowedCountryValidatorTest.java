@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Random;
-import javax.validation.ConstraintValidatorContext;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class AllowedCountryValidatorTest {
 
     private static final List<String> ALLOWED_COUNTRIES = List.of("ES");
-    AllowedCountryValidator validator = new AllowedCountryValidator(ALLOWED_COUNTRIES);
+    private final AllowedCountryValidator validator = new AllowedCountryValidator(ALLOWED_COUNTRIES);
 
     @Mock
     ConstraintValidatorContextImpl cxt;
