@@ -1,19 +1,17 @@
 package com.isilona.registry.application.validation.email;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
-import java.util.List;
+import com.isilona.registry.domain.service.validation.email.EmailExistValidationService;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import org.springframework.beans.factory.annotation.Value;
 
 public class EmailExistValidator implements ConstraintValidator<EmailExistConstraint, String> {
 
-    private final List<String> existingEmails;
+    private final EmailExistValidationService validatorService;
 
-    public EmailExistValidator(@Value("${validation.email.existing}") List<String> existingEmails) {
-        this.existingEmails = existingEmails;
+    public EmailExistValidator(EmailExistValidationService validatorService) {
+        this.validatorService = validatorService;
     }
+
 
     @Override
     public void initialize(EmailExistConstraint email) {
@@ -21,10 +19,7 @@ public class EmailExistValidator implements ConstraintValidator<EmailExistConstr
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext cxt) {
-        if (isBlank(email)) {
-            return true;
-        }
-        return existingEmails.stream().noneMatch(email::equalsIgnoreCase);
+        return validatorService.isValid(email);
     }
 
 }

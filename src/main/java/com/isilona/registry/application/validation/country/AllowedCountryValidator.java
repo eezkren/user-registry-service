@@ -1,19 +1,16 @@
-package com.isilona.registry.application.validation.allowedcountry;
+package com.isilona.registry.application.validation.country;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
-import java.util.List;
+import com.isilona.registry.domain.service.validation.country.AllowedCountryValidationService;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
-import org.springframework.beans.factory.annotation.Value;
 
 public class AllowedCountryValidator implements ConstraintValidator<AllowedCountryConstraint, String> {
 
-    private final List<String> allowedCountries;
+    private final AllowedCountryValidationService validatorService;
 
-    public AllowedCountryValidator(@Value("${validation.country.allowed}") List<String> allowedCountries) {
-        this.allowedCountries = allowedCountries;
+    public AllowedCountryValidator(AllowedCountryValidationService validatorService) {
+        this.validatorService = validatorService;
     }
 
     @Override
@@ -22,16 +19,11 @@ public class AllowedCountryValidator implements ConstraintValidator<AllowedCount
 
     @Override
     public boolean isValid(String countryCodeField, ConstraintValidatorContext cxt) {
-        if (isBlank(countryCodeField)) {
-            return true;
-        }
-
-        if (!allowedCountries.contains(countryCodeField.toUpperCase())) {
+        boolean isValid = validatorService.isValid(countryCodeField);
+        if (!isValid) {
             ((ConstraintValidatorContextImpl) cxt).addMessageParameter("yourCountry", countryCodeField.toUpperCase());
-            return false;
         }
-
-        return true;
+        return isValid;
     }
 
 }

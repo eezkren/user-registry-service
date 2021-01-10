@@ -1,5 +1,10 @@
-package com.isilona.registry.application.validation.phone;
+package com.isilona.registry.domain.service.validation.phone;
 
+import com.isilona.registry.domain.service.validation.phone.strategies.EsPhoneNumberValidation;
+import com.isilona.registry.domain.service.validation.phone.strategies.SkipPhoneNumberValidation;
+import org.springframework.stereotype.Component;
+
+@Component
 public class PhoneNumberValidationStrategyFactory {
 
     private final EsPhoneNumberValidation esPhoneNumberValidation = new EsPhoneNumberValidation();

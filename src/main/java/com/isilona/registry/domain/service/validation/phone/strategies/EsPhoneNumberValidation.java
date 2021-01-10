@@ -1,4 +1,6 @@
-package com.isilona.registry.application.validation.phone;
+package com.isilona.registry.domain.service.validation.phone.strategies;
+
+import com.isilona.registry.domain.service.validation.phone.PhoneNumberValidationStrategy;
 
 public class EsPhoneNumberValidation implements PhoneNumberValidationStrategy {
 
