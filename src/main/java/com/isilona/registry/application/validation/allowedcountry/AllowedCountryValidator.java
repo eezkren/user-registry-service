@@ -1,0 +1,37 @@
+package com.isilona.registry.application.validation.allowedcountry;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
+import java.util.List;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
+import org.springframework.beans.factory.annotation.Value;
+
+public class AllowedCountryValidator implements ConstraintValidator<AllowedCountryConstraint, String> {
+
+    private final List<String> allowedCountries;
+
+    public AllowedCountryValidator(@Value("${validation.country.allowed}") List<String> allowedCountries) {
+        this.allowedCountries = allowedCountries;
+    }
+
+    @Override
+    public void initialize(AllowedCountryConstraint contactNumber) {
+    }
+
+    @Override
+    public boolean isValid(String countryCodeField, ConstraintValidatorContext cxt) {
+        if (isBlank(countryCodeField)) {
+            return true;
+        }
+
+        if (!allowedCountries.contains(countryCodeField.toUpperCase())) {
+            ((ConstraintValidatorContextImpl) cxt).addMessageParameter("yourCountry", countryCodeField.toUpperCase());
+            return false;
+        }
+
+        return true;
+    }
+
+}
