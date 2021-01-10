@@ -2,8 +2,8 @@ package com.isilona.registry.application.request;
 
 import static com.isilona.registry.application.validation.ValidationConstants.EMAIL;
 
-import com.isilona.registry.application.validation.allowedcountry.AllowedCountryConstraint;
-import com.isilona.registry.application.validation.countryocde.CountryCodeConstraint;
+import com.isilona.registry.application.validation.country.AllowedCountryConstraint;
+import com.isilona.registry.application.validation.country.CountryCodeConstraint;
 import com.isilona.registry.application.validation.email.EmailBlacklistConstraint;
 import com.isilona.registry.application.validation.email.EmailExistConstraint;
 import com.isilona.registry.application.validation.phone.PhoneNumberConstraint;

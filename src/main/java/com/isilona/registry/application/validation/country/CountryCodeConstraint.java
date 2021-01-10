@@ -1,4 +1,4 @@
-package com.isilona.registry.application.validation.allowedcountry;
+package com.isilona.registry.application.validation.country;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -9,12 +9,12 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = AllowedCountryValidator.class)
+@Constraint(validatedBy = CountryCodeValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AllowedCountryConstraint {
+public @interface CountryCodeConstraint {
 
-    String message() default "{com.isilona.registry.validation.AllowedCountry.message}";
+    String message() default "{com.isilona.registry.validation.CountryCode.message}";
 
     Class<?>[] groups() default {};
 

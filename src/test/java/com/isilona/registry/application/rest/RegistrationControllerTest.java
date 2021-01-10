@@ -11,6 +11,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.RandomService;
 import com.isilona.registry.application.request.CreateRegistrationRequest;
+import com.isilona.registry.domain.service.validation.country.AllowedCountryValidationService;
+import com.isilona.registry.domain.service.validation.country.CountryCodeValidationService;
+import com.isilona.registry.domain.service.validation.email.EmailBlacklistValidationService;
+import com.isilona.registry.domain.service.validation.email.EmailExistValidationService;
+import com.isilona.registry.domain.service.validation.phone.PhoneNumberValidationStrategyFactory;
+import com.isilona.registry.domain.service.validation.phone.PhoneValidationService;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
@@ -20,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,14 +35,27 @@ class RegistrationControllerTest {
 
     private static final Faker faker = new Faker(new Locale("ES"), new RandomService());
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
-    @Value("${validation.country.allowed}")
-    private List<String> allowedCountries;
-
     private final Map<String, List<String>> validCountryCodesAndPhoneNumbers = Map.of("ES", List.of("+34678666999", "+34-678-666-999"));
 
     @Autowired
     protected MockMvc mockMvc;
+
+    @SpyBean
+    private AllowedCountryValidationService allowedCountryValidationService;
+    @SpyBean
+    private CountryCodeValidationService countryCodeValidationService;
+    @SpyBean
+    private EmailBlacklistValidationService emailBlacklistValidationService;
+    @SpyBean
+    private EmailExistValidationService emailExistValidationService;
+    @SpyBean
+    private PhoneValidationService phoneValidationService;
+    @SpyBean
+    private PhoneNumberValidationStrategyFactory phoneNumberValidationStrategyFactory;
+
+    @Value("${validation.country.allowed}")
+    private List<String> allowedCountries;
+
 
     @Test
     void postShouldReturnOK() throws Exception {

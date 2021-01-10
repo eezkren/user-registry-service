@@ -1,18 +1,15 @@
 package com.isilona.registry.application.validation.email;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
-import java.util.List;
+import com.isilona.registry.domain.service.validation.email.EmailBlacklistValidationService;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import org.springframework.beans.factory.annotation.Value;
 
 public class EmailBlacklistValidator implements ConstraintValidator<EmailBlacklistConstraint, String> {
 
-    private final List<String> blacklistedEmails;
+    private final EmailBlacklistValidationService validatorService;
 
-    public EmailBlacklistValidator(@Value("${validation.email.blacklisted}") List<String> blacklistedEmails) {
-        this.blacklistedEmails = blacklistedEmails;
+    public EmailBlacklistValidator(EmailBlacklistValidationService validatorService) {
+        this.validatorService = validatorService;
     }
 
     @Override
@@ -21,11 +18,7 @@ public class EmailBlacklistValidator implements ConstraintValidator<EmailBlackli
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext cxt) {
-        if (isBlank(email)) {
-            return true;
-        }
-
-        return blacklistedEmails.stream().noneMatch(email::equalsIgnoreCase);
+        return validatorService.isValid(email);
     }
 
 }

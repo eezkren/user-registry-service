@@ -1,4 +1,4 @@
-package com.isilona.registry.application.validation.phone;
+package com.isilona.registry.domain.service.validation.phone;
 
 public interface PhoneNumberValidationStrategy {
 
