@@ -11,10 +11,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.RandomService;
 import com.isilona.registry.application.request.CreateRegistrationRequest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -351,11 +352,11 @@ class RegistrationControllerTest {
     }
 
 
-    private CreateRegistrationRequest buildCreateRegistrationRequest() {
+    private CreateRegistrationRequest buildCreateRegistrationRequest() throws NoSuchAlgorithmException {
 
-        String randomAllowedCountry = allowedCountries.get(new Random().nextInt(allowedCountries.size()));
+        String randomAllowedCountry = allowedCountries.get(SecureRandom.getInstanceStrong().nextInt(allowedCountries.size()));
         List<String> allowedPhoneNumbers = validCountryCodesAndPhoneNumbers.get(randomAllowedCountry);
-        String randomValidNumberFromAllowedCountry = allowedPhoneNumbers.get(new Random().nextInt(allowedPhoneNumbers.size()));
+        String randomValidNumberFromAllowedCountry = allowedPhoneNumbers.get(SecureRandom.getInstanceStrong().nextInt(allowedPhoneNumbers.size()));
 
         return CreateRegistrationRequest.builder()
             .name(faker.name().lastName())

@@ -3,8 +3,9 @@ package com.isilona.registry.application.validation.allowedcountry;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,8 +34,8 @@ class AllowedCountryValidatorTest {
     }
 
     @Test
-    void testAnyFromListIsValid() {
-        String randomAllowedCountry = ALLOWED_COUNTRIES.get(new Random().nextInt(ALLOWED_COUNTRIES.size()));
+    void testAnyFromListIsValid() throws NoSuchAlgorithmException {
+        String randomAllowedCountry = ALLOWED_COUNTRIES.get(SecureRandom.getInstanceStrong().nextInt(ALLOWED_COUNTRIES.size()));
         assertTrue(validator.isValid(randomAllowedCountry, cxt));
     }
 

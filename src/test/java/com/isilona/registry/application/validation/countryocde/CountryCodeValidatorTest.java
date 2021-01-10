@@ -3,8 +3,9 @@ package com.isilona.registry.application.validation.countryocde;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Locale;
-import java.util.Random;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,8 +33,8 @@ class CountryCodeValidatorTest {
     }
 
     @Test
-    void testAnyFromListIsValid() {
-        String randomAllowedCountry = Locale.getISOCountries()[new Random().nextInt(Locale.getISOCountries().length)];
+    void testAnyFromListIsValid() throws NoSuchAlgorithmException {
+        String randomAllowedCountry = Locale.getISOCountries()[SecureRandom.getInstanceStrong().nextInt(Locale.getISOCountries().length)];
         assertTrue(validator.isValid(randomAllowedCountry, cxt));
     }
 

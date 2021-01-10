@@ -3,8 +3,9 @@ package com.isilona.registry.application.validation.email;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.List;
-import java.util.Random;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -30,8 +31,8 @@ class EmailBlacklistValidatorTest {
     }
 
     @Test
-    void testAnyFromListIsNotValid() {
-        String randomBlacklistedEmail = BLACKLISTED_EMAILS.get(new Random().nextInt(BLACKLISTED_EMAILS.size()));
+    void testAnyFromListIsNotValid() throws NoSuchAlgorithmException {
+        String randomBlacklistedEmail = BLACKLISTED_EMAILS.get(SecureRandom.getInstanceStrong().nextInt(BLACKLISTED_EMAILS.size()));
         assertFalse(validator.isValid(randomBlacklistedEmail, cxt));
         assertFalse(validator.isValid(randomBlacklistedEmail.toUpperCase(), cxt));
     }
