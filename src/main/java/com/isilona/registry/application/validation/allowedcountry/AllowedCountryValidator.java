@@ -12,7 +12,7 @@ public class AllowedCountryValidator implements ConstraintValidator<AllowedCount
 
     private final List<String> allowedCountries;
 
-    public AllowedCountryValidator(@Value("${validation.allowed-countries}") List<String> allowedCountries) {
+    public AllowedCountryValidator(@Value("${validation.country.allowed}") List<String> allowedCountries) {
         this.allowedCountries = allowedCountries;
     }
 

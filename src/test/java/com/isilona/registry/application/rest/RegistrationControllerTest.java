@@ -28,7 +28,7 @@ class RegistrationControllerTest {
     private static final Faker faker = new Faker(new Locale("ES"), new RandomService());
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    @Value("${validation.allowed-countries}")
+    @Value("${validation.country.allowed}")
     private List<String> allowedCountries;
 
     private final Map<String, List<String>> validCountryCodesAndPhoneNumbers = Map.of("ES", List.of("+34678666999", "+34-678-666-999"));
@@ -315,6 +315,39 @@ class RegistrationControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(getAsJson(request)))
             .andExpect(status().isOk());
+    }
+
+
+    @Test
+    void postWithBlacklistedEmailShouldReturnError() throws Exception {
+        CreateRegistrationRequest request = buildCreateRegistrationRequest();
+        String expectedBlacklistedEmailErrorMessage = "email: {com.isilona.registry.validation.EmailBlacklist.message}";
+
+        request.setEmail("evil@gmail.com");
+        this.mockMvc.perform(post("/registration")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(getAsJson(request)))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$").exists())
+            .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
+            .andExpect(jsonPath("$.errors.length()").value(1))
+            .andExpect(jsonPath("$.errors").value(containsInAnyOrder(expectedBlacklistedEmailErrorMessage)));
+    }
+
+    @Test
+    void postWithAlreadyExistingEmailShouldReturnError() throws Exception {
+        CreateRegistrationRequest request = buildCreateRegistrationRequest();
+        String expectedExistingEmailErrorMessage = "email: {com.isilona.registry.validation.EmailExist.message}";
+
+        request.setEmail("registered@gmail.com");
+        this.mockMvc.perform(post("/registration")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(getAsJson(request)))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$").exists())
+            .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
+            .andExpect(jsonPath("$.errors.length()").value(1))
+            .andExpect(jsonPath("$.errors").value(containsInAnyOrder(expectedExistingEmailErrorMessage)));
     }
 
 

@@ -4,6 +4,8 @@ import static com.isilona.registry.application.validation.ValidationConstants.EM
 
 import com.isilona.registry.application.validation.allowedcountry.AllowedCountryConstraint;
 import com.isilona.registry.application.validation.countryocde.CountryCodeConstraint;
+import com.isilona.registry.application.validation.email.EmailBlacklistConstraint;
+import com.isilona.registry.application.validation.email.EmailExistConstraint;
 import com.isilona.registry.application.validation.phone.PhoneNumberConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -26,6 +28,8 @@ public class CreateRegistrationRequest {
     @NotBlank
     private String surname;
 
+    @EmailBlacklistConstraint
+    @EmailExistConstraint
     @Email(regexp = EMAIL)
     @NotBlank
     private String email;
