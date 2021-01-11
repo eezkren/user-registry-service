@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.RandomService;
 import com.isilona.registry.application.request.CreateRegistrationRequest;
+import com.isilona.registry.domain.service.RegistrationService;
 import com.isilona.registry.domain.service.validation.country.AllowedCountryValidationService;
 import com.isilona.registry.domain.service.validation.country.CountryCodeValidationService;
 import com.isilona.registry.domain.service.validation.email.EmailBlacklistValidationService;
@@ -26,6 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -52,6 +54,9 @@ class RegistrationControllerTest {
     private PhoneValidationService phoneValidationService;
     @SpyBean
     private PhoneNumberValidationStrategyFactory phoneNumberValidationStrategyFactory;
+
+    @MockBean
+    private RegistrationService registrationService;
 
     @Value("${validation.country.allowed}")
     private List<String> allowedCountries;
