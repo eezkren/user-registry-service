@@ -9,16 +9,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class H2DbRegistrationRepository implements RegistrationRepository {
 
-    private final SpringDataH2RegistrationRepository registrationRepository;
+    private final SpringDataH2RegistrationRepository springDataRepository;
     private final RegistrationMapper mapper;
 
     public H2DbRegistrationRepository(SpringDataH2RegistrationRepository registrationRepository, RegistrationMapper mapper) {
-        this.registrationRepository = registrationRepository;
+        this.springDataRepository = registrationRepository;
         this.mapper = mapper;
     }
 
     @Override
     public UUID create(Registration domainObject) {
-        return registrationRepository.save(mapper.domainToEntityObject(domainObject)).getId();
+        return springDataRepository.save(mapper.domainToEntityObject(domainObject)).getId();
+    }
+
+    @Override
+    public boolean emailNotExists(String email) {
+        return !springDataRepository.existsRegistrationEntityByEmail(email);
     }
 }

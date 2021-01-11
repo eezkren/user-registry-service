@@ -7,4 +7,6 @@ public interface RegistrationService {
 
     UUID createRegistration(CreateRegistrationRequest requestObject);
 
+    boolean emailNotExists(String email);
+
 }

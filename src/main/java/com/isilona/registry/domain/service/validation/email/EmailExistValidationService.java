@@ -2,18 +2,16 @@ package com.isilona.registry.domain.service.validation.email;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Value;
+import com.isilona.registry.domain.service.RegistrationService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmailExistValidationService {
 
-    @Value("${validation.email.existing}")
-    private final List<String> existingEmails;
+    private final RegistrationService registrationService;
 
-    public EmailExistValidationService(@Value("${validation.email.existing}") List<String> existingEmails) {
-        this.existingEmails = existingEmails;
+    public EmailExistValidationService(RegistrationService registrationService) {
+        this.registrationService = registrationService;
     }
 
 
@@ -21,6 +19,6 @@ public class EmailExistValidationService {
         if (isBlank(email)) {
             return true;
         }
-        return existingEmails.stream().noneMatch(email::equalsIgnoreCase);
+        return registrationService.emailNotExists(email);
     }
 }

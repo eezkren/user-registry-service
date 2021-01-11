@@ -21,4 +21,9 @@ public class DomainRegistrationService implements RegistrationService {
         final Registration registration = mapper.requestToDomainObject(requestObject);
         return repository.create(registration);
     }
+
+    @Override
+    public boolean emailNotExists(String email) {
+        return repository.emailNotExists(email);
+    }
 }

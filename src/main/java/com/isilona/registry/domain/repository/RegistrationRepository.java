@@ -7,4 +7,6 @@ public interface RegistrationRepository {
 
     UUID create(Registration domainObject);
 
+    boolean emailNotExists(String email);
+
 }

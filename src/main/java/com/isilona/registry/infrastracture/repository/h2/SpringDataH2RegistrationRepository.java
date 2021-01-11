@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SpringDataH2RegistrationRepository extends JpaRepository<RegistrationEntity, UUID> {
 
+    boolean existsRegistrationEntityByEmail(String email);
 }

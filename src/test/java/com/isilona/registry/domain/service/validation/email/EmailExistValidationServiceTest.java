@@ -3,16 +3,26 @@ package com.isilona.registry.domain.service.validation.email;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.isilona.registry.domain.service.validation.email.EmailExistValidationService;
+import com.isilona.registry.domain.service.RegistrationService;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
+@SpringBootTest
 class EmailExistValidationServiceTest {
 
     private static final List<String> EXISTING_EMAILS = List.of("registered@gmail.com");
-    private final EmailExistValidationService validator = new EmailExistValidationService(EXISTING_EMAILS);
+
+    @MockBean
+    private RegistrationService registrationService;
+
+    @SpyBean
+    private EmailExistValidationService validator;
 
     @Test
     void testNullIsValid() {
@@ -29,12 +39,14 @@ class EmailExistValidationServiceTest {
     @Test
     void testAnyFromListIsNotValid() throws NoSuchAlgorithmException {
         String randomExistingEmail = EXISTING_EMAILS.get(SecureRandom.getInstanceStrong().nextInt(EXISTING_EMAILS.size()));
+        Mockito.when(registrationService.emailNotExists(randomExistingEmail)).thenReturn(false);
         assertFalse(validator.isValid(randomExistingEmail));
         assertFalse(validator.isValid(randomExistingEmail.toUpperCase()));
     }
 
     @Test
     void testAnyNotInListIsValid() {
+        Mockito.when(registrationService.emailNotExists("XX")).thenReturn(true);
         assertTrue(validator.isValid("XX"));
     }
 
