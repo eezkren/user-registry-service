@@ -8,21 +8,23 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class EmailExistValidationServiceTest {
 
     private static final List<String> EXISTING_EMAILS = List.of("registered@gmail.com");
 
-    @MockBean
+    @Mock
     private RegistrationService registrationService;
 
-    @SpyBean
+    @InjectMocks
     private EmailExistValidationService validator;
+
 
     @Test
     void testNullIsValid() {

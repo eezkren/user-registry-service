@@ -2,12 +2,11 @@ package com.isilona.registry.domain.service.validation.country;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
+import com.isilona.registry.domain.service.validation.ValidationService;
 import java.util.Arrays;
 import java.util.Locale;
-import org.springframework.stereotype.Service;
 
-@Service
-public class CountryCodeValidationService {
+public class CountryCodeValidationService implements ValidationService<String> {
 
     public boolean isValid(String countryCode) {
         if (isBlank(countryCode)) {

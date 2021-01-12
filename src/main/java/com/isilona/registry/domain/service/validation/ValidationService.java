@@ -1,5 +1,6 @@
 package com.isilona.registry.domain.service.validation;
 
-public interface ValidationService {
-    boolean isValid();
+public interface ValidationService<T> {
+
+    boolean isValid(T validatedObject);
 }

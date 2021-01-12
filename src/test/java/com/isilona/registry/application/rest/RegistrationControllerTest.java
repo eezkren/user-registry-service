@@ -44,11 +44,11 @@ class RegistrationControllerTest {
     protected MockMvc mockMvc;
     @MockBean
     private RegistrationService registrationService;
-    @SpyBean
+    @MockBean
     private AllowedCountryValidationService allowedCountryValidationService;
     @SpyBean
     private CountryCodeValidationService countryCodeValidationService;
-    @SpyBean
+    @MockBean
     private EmailBlacklistValidationService emailBlacklistValidationService;
     @SpyBean
     private EmailExistValidationService emailExistValidationService;
@@ -62,6 +62,8 @@ class RegistrationControllerTest {
     @Test
     void postShouldReturnOK() throws Exception {
         Mockito.when(registrationService.emailNotExists(anyString())).thenReturn(true);
+        Mockito.when(allowedCountryValidationService.isValid(anyString())).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(anyString())).thenReturn(true);
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
 
@@ -75,6 +77,8 @@ class RegistrationControllerTest {
     @Test
     void postWithoutNameShouldReturnError() throws Exception {
         Mockito.when(registrationService.emailNotExists(anyString())).thenReturn(true);
+        Mockito.when(allowedCountryValidationService.isValid(anyString())).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(anyString())).thenReturn(true);
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedErrorMessage = "name: must not be blank";
@@ -113,6 +117,8 @@ class RegistrationControllerTest {
     @Test
     void postWithoutSurnameShouldReturnError() throws Exception {
         Mockito.when(registrationService.emailNotExists(anyString())).thenReturn(true);
+        Mockito.when(allowedCountryValidationService.isValid(anyString())).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(anyString())).thenReturn(true);
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedErrorMessage = "surname: must not be blank";
@@ -151,6 +157,8 @@ class RegistrationControllerTest {
     @Test
     void postWithoutPhoneShouldReturnError() throws Exception {
         Mockito.when(registrationService.emailNotExists(anyString())).thenReturn(true);
+        Mockito.when(allowedCountryValidationService.isValid(anyString())).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(anyString())).thenReturn(true);
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedErrorMessage = "phone: must not be blank";
@@ -189,6 +197,9 @@ class RegistrationControllerTest {
     @Test
     void postWithoutCountryShouldReturnError() throws Exception {
         Mockito.when(registrationService.emailNotExists(anyString())).thenReturn(true);
+        Mockito.when(allowedCountryValidationService.isValid(anyString())).thenReturn(true);
+        Mockito.when(allowedCountryValidationService.isValid(null)).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(anyString())).thenReturn(true);
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedErrorMessage = "country: must not be blank";
@@ -229,6 +240,10 @@ class RegistrationControllerTest {
     @Test
     void postWithoutEmailShouldReturnError() throws Exception {
 
+        Mockito.when(allowedCountryValidationService.isValid(anyString())).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(anyString())).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(null)).thenReturn(true);
+
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedErrorMessage = "email: must not be blank";
         String expectedFormatErrorMessage = "email: must be a well-formed email address";
@@ -267,6 +282,8 @@ class RegistrationControllerTest {
     @Test
     void postWithInvalidEmailFormatShouldReturnError() throws Exception {
         Mockito.when(registrationService.emailNotExists(anyString())).thenReturn(true);
+        Mockito.when(allowedCountryValidationService.isValid(anyString())).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(anyString())).thenReturn(true);
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedFormatErrorMessage = "email: must be a well-formed email address";
@@ -305,6 +322,7 @@ class RegistrationControllerTest {
     @Test
     void postWithInvalidCountryFormatShouldReturnError() throws Exception {
         Mockito.when(registrationService.emailNotExists(anyString())).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(anyString())).thenReturn(true);
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedFormatErrorMessage = "country: {com.isilona.registry.validation.CountryCode.size.message}";
@@ -341,17 +359,30 @@ class RegistrationControllerTest {
                     String.format(expectedCountryNorAllowedErrorMessage, request.getCountry())
                 )));
 
+
+    }
+
+    @Test
+    void postWithValidCountryFormatShouldReturnOK() throws Exception {
+        Mockito.when(registrationService.emailNotExists(anyString())).thenReturn(true);
+        Mockito.when(allowedCountryValidationService.isValid("ES")).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(anyString())).thenReturn(true);
+
+        CreateRegistrationRequest request = buildCreateRegistrationRequest();
+
         request.setCountry("ES");
         this.mockMvc.perform(post("/registration")
             .contentType(MediaType.APPLICATION_JSON)
             .content(getAsJson(request)))
             .andExpect(status().isOk());
+
     }
 
 
     @Test
     void postWithBlacklistedEmailShouldReturnError() throws Exception {
         Mockito.when(registrationService.emailNotExists(anyString())).thenReturn(true);
+        Mockito.when(allowedCountryValidationService.isValid(anyString())).thenReturn(true);
 
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedBlacklistedEmailErrorMessage = "email: {com.isilona.registry.validation.EmailBlacklist.message}";
@@ -369,6 +400,9 @@ class RegistrationControllerTest {
 
     @Test
     void postWithAlreadyExistingEmailShouldReturnError() throws Exception {
+        Mockito.when(allowedCountryValidationService.isValid(anyString())).thenReturn(true);
+        Mockito.when(emailBlacklistValidationService.isValid(anyString())).thenReturn(true);
+
         CreateRegistrationRequest request = buildCreateRegistrationRequest();
         String expectedExistingEmailErrorMessage = "email: {com.isilona.registry.validation.EmailExist.message}";
 
