@@ -4,6 +4,7 @@ import com.isilona.registry.RegistryApplication;
 import com.isilona.registry.domain.mapping.RegistrationMapper;
 import com.isilona.registry.domain.repository.RegistrationRepository;
 import com.isilona.registry.domain.service.DomainRegistrationService;
+import com.isilona.registry.domain.service.notification.RegistrationCreatedProducer;
 import com.isilona.registry.domain.service.RegistrationService;
 import com.isilona.registry.domain.service.validation.country.AllowedCountryValidationService;
 import com.isilona.registry.domain.service.validation.country.CountryCodeValidationService;
@@ -24,9 +25,10 @@ public class BeanConfiguration {
     @Bean
     RegistrationService registrationService(
         final RegistrationRepository registrationRepository,
-        final RegistrationMapper mapper
+        final RegistrationMapper mapper,
+        final RegistrationCreatedProducer producer
     ) {
-        return new DomainRegistrationService(mapper, registrationRepository);
+        return new DomainRegistrationService(mapper, registrationRepository, producer);
     }
 
     @Bean

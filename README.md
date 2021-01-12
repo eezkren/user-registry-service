@@ -1,6 +1,8 @@
 # user-registry-service
 Service to manage the user registry
 
+## run kafka : docker-compose up -d
+
 We want to develop a new service to manage the user registry in our company.
 The user provides this information in the registry process (All the fields are mandatory):
 Name
