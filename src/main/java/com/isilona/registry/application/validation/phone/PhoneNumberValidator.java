@@ -4,6 +4,7 @@ import com.isilona.registry.application.request.CreateRegistrationRequest;
 import com.isilona.registry.domain.service.validation.phone.PhoneValidationService;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 
 public class PhoneNumberValidator implements ConstraintValidator<PhoneNumberConstraint, CreateRegistrationRequest> {
 
@@ -20,6 +21,11 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumberCons
 
     @Override
     public boolean isValid(CreateRegistrationRequest createRegistrationRequest, ConstraintValidatorContext constraintValidatorContext) {
-        return validatorService.isValid(createRegistrationRequest);
+        boolean isValid = validatorService.isValid(createRegistrationRequest);
+        if (!isValid) {
+            ((ConstraintValidatorContextImpl) constraintValidatorContext)
+                .addMessageParameter("yourCountry", createRegistrationRequest.getCountry().toUpperCase());
+        }
+        return isValid;
     }
 }

@@ -2,20 +2,18 @@ package com.isilona.registry.domain.service.validation.country;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
+import com.isilona.registry.domain.service.validation.ValidationService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
-@Service
-public class AllowedCountryValidationService {
+public class AllowedCountryValidationService implements ValidationService<String> {
 
-    @Value("${validation.country.allowed}")
     private final List<String> allowedCountries;
 
-    public AllowedCountryValidationService(@Value("${validation.country.allowed}") List<String> allowedCountries) {
+    public AllowedCountryValidationService(List<String> allowedCountries) {
         this.allowedCountries = allowedCountries;
     }
 
+    @Override
     public boolean isValid(String countryCodeField) {
         if (isBlank(countryCodeField)) {
             return true;

@@ -8,25 +8,13 @@ import com.github.javafaker.service.RandomService;
 import com.isilona.registry.application.request.CreateRegistrationRequest;
 import java.util.Locale;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
-//@ExtendWith(MockitoExtension.class)
-//@RunWith(SpringRunner.class )
-@SpringBootTest
 class PhoneNumberValidationServiceTest {
 
     private static final Faker faker = new Faker(new Locale("ES"), new RandomService());
 
-    @SpyBean
-    private PhoneNumberValidationStrategyFactory phoneNumberValidationStrategyFactory;
-
-    @SpyBean
-    private PhoneValidationService validator;
+    private final PhoneNumberValidationStrategyFactory phoneNumberValidationStrategyFactory = new PhoneNumberValidationStrategyFactory();
+    private final PhoneValidationService validator = new PhoneValidationService(phoneNumberValidationStrategyFactory);
 
     @Test
     void testNullIsValid() {

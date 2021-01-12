@@ -2,17 +2,14 @@ package com.isilona.registry.domain.service.validation.email;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
+import com.isilona.registry.domain.service.validation.ValidationService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
-@Service
-public class EmailBlacklistValidationService {
+public class EmailBlacklistValidationService implements ValidationService<String> {
 
-    @Value("${validation.email.blacklisted}")
     private final List<String> blacklistedEmails;
 
-    public EmailBlacklistValidationService(@Value("${validation.email.blacklisted}") List<String> blacklistedEmails) {
+    public EmailBlacklistValidationService(List<String> blacklistedEmails) {
         this.blacklistedEmails = blacklistedEmails;
     }
 
