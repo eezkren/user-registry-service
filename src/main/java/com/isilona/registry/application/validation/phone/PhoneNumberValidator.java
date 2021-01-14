@@ -1,6 +1,6 @@
 package com.isilona.registry.application.validation.phone;
 
-import com.isilona.registry.application.request.CreateRegistrationRequest;
+import com.isilona.registry.infrastracture.rest.request.CreateRegistrationRequest;
 import com.isilona.registry.domain.service.validation.phone.PhoneValidationService;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

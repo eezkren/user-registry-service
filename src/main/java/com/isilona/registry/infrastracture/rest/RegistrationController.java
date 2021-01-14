@@ -1,6 +1,6 @@
-package com.isilona.registry.application.rest;
+package com.isilona.registry.infrastracture.rest;
 
-import com.isilona.registry.application.request.CreateRegistrationRequest;
+import com.isilona.registry.infrastracture.rest.request.CreateRegistrationRequest;
 import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;

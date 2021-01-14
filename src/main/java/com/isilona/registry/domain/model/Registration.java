@@ -10,6 +10,10 @@ import lombok.ToString;
 @ToString
 public class Registration {
 
+    /**
+     * FIXME ANEMIC MODEL
+     * https://link-intersystems.com/blog/2011/10/01/anemic-vs-rich-domain-models/
+     */
     private UUID id;
     private String name;
     private String surname;

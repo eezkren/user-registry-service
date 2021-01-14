@@ -1,4 +1,4 @@
-package com.isilona.registry.infrastracture.repository.h2;
+package com.isilona.registry.infrastracture.repository;
 
 import com.isilona.registry.domain.mapping.RegistrationMapper;
 import com.isilona.registry.domain.model.Registration;

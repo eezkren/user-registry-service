@@ -1,41 +1,34 @@
-package com.isilona.registry.domain.service;
+package com.isilona.registry.application.use_case;
 
-import com.isilona.registry.application.request.CreateRegistrationRequest;
+import com.isilona.registry.infrastracture.rest.request.CreateRegistrationRequest;
 import com.isilona.registry.domain.mapping.RegistrationMapper;
 import com.isilona.registry.domain.model.Registration;
 import com.isilona.registry.domain.repository.RegistrationRepository;
 import com.isilona.registry.domain.service.notification.RegistrationCreatedProducer;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.UUID;
 
-public class DomainRegistrationService implements RegistrationService {
+@Service
+@RequiredArgsConstructor
+public class DomainRegistrationUseCase implements RegistrationUseCase {
 
     private final RegistrationMapper mapper;
     private final RegistrationRepository repository;
     private final RegistrationCreatedProducer producer;
 
-    public DomainRegistrationService(
-        RegistrationMapper mapper,
-        RegistrationRepository repository,
-        RegistrationCreatedProducer producer
-    ) {
-        this.mapper = mapper;
-        this.repository = repository;
-        this.producer = producer;
-    }
-
     @Override
     public UUID createRegistration(CreateRegistrationRequest requestObject) {
+
         final Registration registration = mapper.requestToDomainObject(requestObject);
 
         UUID createdRegistrationId = repository.create(registration);
         registration.setId(createdRegistrationId);
+
         producer.notify(registration);
 
         return createdRegistrationId;
     }
 
-    @Override
-    public boolean emailNotExists(String email) {
-        return repository.emailNotExists(email);
-    }
 }

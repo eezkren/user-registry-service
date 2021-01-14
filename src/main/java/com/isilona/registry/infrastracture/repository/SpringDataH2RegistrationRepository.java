@@ -1,6 +1,8 @@
-package com.isilona.registry.infrastracture.repository.h2;
+package com.isilona.registry.infrastracture.repository;
 
 import java.util.UUID;
+
+import com.isilona.registry.infrastracture.model.RegistrationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

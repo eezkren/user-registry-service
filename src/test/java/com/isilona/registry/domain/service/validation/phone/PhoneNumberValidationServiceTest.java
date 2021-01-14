@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.RandomService;
-import com.isilona.registry.application.request.CreateRegistrationRequest;
+import com.isilona.registry.infrastracture.rest.request.CreateRegistrationRequest;
 import java.util.Locale;
 import org.junit.jupiter.api.Test;
 

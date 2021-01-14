@@ -1,4 +1,4 @@
-package com.isilona.registry.application.request;
+package com.isilona.registry.infrastracture.rest.request;
 
 import static com.isilona.registry.application.validation.ValidationConstants.EMAIL;
 

@@ -1,6 +1,8 @@
-package com.isilona.registry.application.exception;
+package com.isilona.registry.infrastracture.rest.exception;
 
 import java.util.List;
+
+import com.isilona.registry.domain.model.Registration;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;

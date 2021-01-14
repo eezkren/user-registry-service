@@ -1,4 +1,4 @@
-package com.isilona.registry.application.exception;
+package com.isilona.registry.infrastracture.rest.exception;
 
 import java.util.ArrayList;
 import java.util.List;

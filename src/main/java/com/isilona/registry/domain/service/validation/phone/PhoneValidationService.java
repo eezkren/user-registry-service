@@ -3,8 +3,10 @@ package com.isilona.registry.domain.service.validation.phone;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-import com.isilona.registry.application.request.CreateRegistrationRequest;
+import com.isilona.registry.infrastracture.rest.request.CreateRegistrationRequest;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PhoneValidationService {
 
     private final PhoneNumberValidationStrategyFactory phoneNumberValidationStrategyFactory;

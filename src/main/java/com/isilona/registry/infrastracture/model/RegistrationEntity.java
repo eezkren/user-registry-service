@@ -1,4 +1,4 @@
-package com.isilona.registry.infrastracture.repository.h2;
+package com.isilona.registry.infrastracture.model;
 
 import java.util.UUID;
 import javax.persistence.Column;
