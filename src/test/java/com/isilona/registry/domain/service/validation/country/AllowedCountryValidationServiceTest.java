@@ -1,40 +1,39 @@
 package com.isilona.registry.domain.service.validation.country;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.List;
-import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
 
 class AllowedCountryValidationServiceTest {
 
-    private static final List<String> ALLOWED_COUNTRIES = List.of("ES");
-    private final AllowedCountryValidationService validator = new AllowedCountryValidationService(ALLOWED_COUNTRIES);
+    private static final List<String>                    ALLOWED_COUNTRIES = List.of("ES");
+    private final        AllowedCountryValidationService validator         = new AllowedCountryValidationService(ALLOWED_COUNTRIES);
 
-    @Test
-    void testNullIsValid() {
-        assertTrue(validator.isValid(null));
+    private static Stream<Arguments> provideCountries() throws NoSuchAlgorithmException {
+
+        String country = ALLOWED_COUNTRIES.get(SecureRandom.getInstanceStrong().nextInt(ALLOWED_COUNTRIES.size()));
+        return Stream.of(
+                Arguments.of("", true),
+                Arguments.of(" ", true),
+                Arguments.of("     ", true),
+                Arguments.of(country, true),
+                Arguments.of(country.toLowerCase(), true),
+                Arguments.of(country.toUpperCase(), true),
+                Arguments.of("XX", false)
+                        );
     }
 
-    @Test
-    void testEmptyIsValid() {
-        assertTrue(validator.isValid(""));
-        assertTrue(validator.isValid(" "));
-        assertTrue(validator.isValid("       "));
+    @ParameterizedTest
+    @MethodSource("provideCountries")
+    void testNullIsValid(String country, boolean isValidExpected) {
+        boolean isValidRetrieved = validator.isValid(country);
+        Assertions.assertThat(isValidExpected).isEqualTo(isValidRetrieved);
     }
-
-    @Test
-    void testAnyFromListIsValid() throws NoSuchAlgorithmException {
-        String randomAllowedCountry = ALLOWED_COUNTRIES.get(SecureRandom.getInstanceStrong().nextInt(ALLOWED_COUNTRIES.size()));
-        assertTrue(validator.isValid(randomAllowedCountry));
-    }
-
-    @Test
-    void testAnyNotInListIsInvalid() {
-        assertFalse(validator.isValid("XX"));
-    }
-
 
 }
