@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.RandomService;
 import com.isilona.registry.application.use_case.RegistrationUseCase;
-import com.isilona.registry.domain.repository.RegistrationRepository;
+import com.isilona.registry.domain.port.repository.RegistrationRepository;
 import com.isilona.registry.domain.service.validation.country.AllowedCountryValidationService;
 import com.isilona.registry.domain.service.validation.country.CountryCodeValidationService;
 import com.isilona.registry.domain.service.validation.email.EmailBlacklistValidationService;

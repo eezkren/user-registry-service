@@ -1,8 +1,8 @@
-package com.isilona.registry.infrastracture.repository;
+package com.isilona.registry.infrastracture.adapter.repository;
 
 import com.isilona.registry.domain.mapping.RegistrationMapper;
 import com.isilona.registry.domain.model.Registration;
-import com.isilona.registry.domain.repository.RegistrationRepository;
+import com.isilona.registry.domain.port.repository.RegistrationRepository;
 import java.util.UUID;
 import org.springframework.stereotype.Component;
 

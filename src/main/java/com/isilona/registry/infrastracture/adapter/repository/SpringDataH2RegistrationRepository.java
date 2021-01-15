@@ -1,4 +1,4 @@
-package com.isilona.registry.infrastracture.repository;
+package com.isilona.registry.infrastracture.adapter.repository;
 
 import java.util.UUID;
 

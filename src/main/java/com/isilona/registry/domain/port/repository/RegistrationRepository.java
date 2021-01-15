@@ -1,4 +1,4 @@
-package com.isilona.registry.domain.repository;
+package com.isilona.registry.domain.port.repository;
 
 import com.isilona.registry.domain.model.Registration;
 import java.util.UUID;

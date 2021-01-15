@@ -1,10 +1,11 @@
 package com.isilona.registry.application.use_case;
 
-import com.isilona.registry.infrastracture.rest.request.CreateRegistrationRequest;
+import com.isilona.registry.domain.event.UserRegisteredEvent;
 import com.isilona.registry.domain.mapping.RegistrationMapper;
 import com.isilona.registry.domain.model.Registration;
-import com.isilona.registry.domain.repository.RegistrationRepository;
-import com.isilona.registry.domain.service.notification.RegistrationCreatedProducer;
+import com.isilona.registry.domain.port.event.NotifierPort;
+import com.isilona.registry.domain.port.repository.RegistrationRepository;
+import com.isilona.registry.infrastracture.rest.request.CreateRegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class DomainRegistrationUseCase implements RegistrationUseCase {
 
-    private final RegistrationMapper mapper;
+    private final RegistrationMapper     mapper;
     private final RegistrationRepository repository;
-    private final RegistrationCreatedProducer producer;
+    private final NotifierPort           producer;
 
     @Override
     public UUID createRegistration(CreateRegistrationRequest requestObject) {
@@ -26,7 +27,7 @@ public class DomainRegistrationUseCase implements RegistrationUseCase {
         UUID createdRegistrationId = repository.create(registration);
         registration.setId(createdRegistrationId);
 
-        producer.notify(registration);
+        producer.notify(new UserRegisteredEvent(createdRegistrationId));
 
         return createdRegistrationId;
     }

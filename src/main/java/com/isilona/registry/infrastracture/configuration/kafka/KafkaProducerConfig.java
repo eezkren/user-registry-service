@@ -1,7 +1,9 @@
 package com.isilona.registry.infrastracture.configuration.kafka;
 
+import com.isilona.registry.domain.event.DomainEvent;
 import com.isilona.registry.domain.model.Registration;
-import com.isilona.registry.domain.service.notification.RegistrationCreatedProducer;
+import com.isilona.registry.domain.port.event.NotifierPort;
+import com.isilona.registry.infrastracture.adapter.notification.KafkaNotifierAdapter;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -33,18 +35,18 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public ProducerFactory<String, Registration> producerFactory() {
+    public ProducerFactory<String, DomainEvent> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, Registration> kafkaTemplate() {
+    public KafkaTemplate<String, DomainEvent> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
     @Bean
-    public RegistrationCreatedProducer registrationCreatedProducer(KafkaTemplate<String, Registration> kafkaTemplate) {
-        return new RegistrationCreatedProducer(topicName, kafkaTemplate);
+    public NotifierPort registrationCreatedProducer(KafkaTemplate<String, DomainEvent> kafkaTemplate) {
+        return new KafkaNotifierAdapter(topicName, kafkaTemplate);
     }
 
 }
