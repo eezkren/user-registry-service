@@ -1,6 +1,6 @@
 package com.isilona.registry.infrastracture.model;
 
-import com.isilona.registry.domain.mapping.Mapper;
+import com.isilona.registry.shared.mapping.Mapper;
 import com.isilona.registry.domain.model.Registration;
 import lombok.Getter;
 import lombok.Setter;

@@ -5,7 +5,7 @@ import com.isilona.registry.application.validation.country.CountryCodeConstraint
 import com.isilona.registry.application.validation.email.EmailBlacklistConstraint;
 import com.isilona.registry.application.validation.email.EmailExistConstraint;
 import com.isilona.registry.application.validation.phone.PhoneNumberConstraint;
-import com.isilona.registry.domain.mapping.Mapper;
+import com.isilona.registry.shared.mapping.Mapper;
 import com.isilona.registry.domain.model.Registration;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.isilona.registry.domain.mapping;
+package com.isilona.registry.shared.mapping;
 
 import com.isilona.registry.infrastracture.rest.request.CreateRegistrationRequest;
 import com.isilona.registry.domain.model.Registration;
