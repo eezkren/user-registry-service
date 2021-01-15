@@ -5,6 +5,6 @@ import java.util.UUID;
 
 public interface RegistrationUseCase {
 
-    UUID createRegistration(CreateRegistrationRequest requestObject);
+    void createRegistration(CreateRegistrationRequest requestObject);
 
 }

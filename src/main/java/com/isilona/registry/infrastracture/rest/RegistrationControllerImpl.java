@@ -18,9 +18,9 @@ public class RegistrationControllerImpl implements RegistrationController {
     }
 
     @Override
-    public ResponseEntity<UUID> createRegistration(CreateRegistrationRequest createRegistrationRequest) {
+    public ResponseEntity<Void> createRegistration(CreateRegistrationRequest createRegistrationRequest) {
         log.info(createRegistrationRequest);
-        return ResponseEntity.ok()
-            .body(registrationUseCase.createRegistration(createRegistrationRequest));
+        registrationUseCase.createRegistration(createRegistrationRequest);
+        return ResponseEntity.ok().build();
     }
 }

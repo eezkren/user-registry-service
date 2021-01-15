@@ -4,22 +4,20 @@ import com.isilona.registry.domain.mapping.RegistrationMapper;
 import com.isilona.registry.domain.model.Registration;
 import com.isilona.registry.domain.port.repository.RegistrationRepository;
 import java.util.UUID;
+
+import com.isilona.registry.infrastracture.model.RegistrationEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class H2DbRegistrationRepository implements RegistrationRepository {
 
     private final SpringDataH2RegistrationRepository springDataRepository;
-    private final RegistrationMapper mapper;
-
-    public H2DbRegistrationRepository(SpringDataH2RegistrationRepository registrationRepository, RegistrationMapper mapper) {
-        this.springDataRepository = registrationRepository;
-        this.mapper = mapper;
-    }
 
     @Override
-    public UUID create(Registration domainObject) {
-        return springDataRepository.save(mapper.domainToEntityObject(domainObject)).getId();
+    public UUID create(Registration registration) {
+        return springDataRepository.save(RegistrationEntity.from(registration)).getId();
     }
 
     @Override

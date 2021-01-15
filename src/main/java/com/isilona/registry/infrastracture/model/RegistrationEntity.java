@@ -1,13 +1,12 @@
 package com.isilona.registry.infrastracture.model;
 
-import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.isilona.registry.domain.mapping.Mapper;
+import com.isilona.registry.domain.model.Registration;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -34,4 +33,8 @@ public class RegistrationEntity {
 
     @Column(name = "country_code")
     private String country;
+
+    public static RegistrationEntity from(Registration registration) {
+        return Mapper.registrationMapper.domainToEntityObject(registration);
+    }
 }

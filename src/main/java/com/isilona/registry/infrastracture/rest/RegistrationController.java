@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface RegistrationController {
 
     @PostMapping
-    ResponseEntity<UUID> createRegistration(
+    ResponseEntity<Void> createRegistration(
         @Valid @RequestBody final CreateRegistrationRequest createOrderRequest
     );
 
